@@ -1,22 +1,13 @@
 package fr.guigui205.arkama;
 
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Player;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Arrays;
+import io.papermc.paper.event.player.AsyncChatEvent;
+
 
 import static fr.guigui205.arkama.ArkaGrades.grades;
 
@@ -34,9 +25,10 @@ class ChatEvent implements Listener {
 
 
     @EventHandler
-    public void onChat(AsyncPlayerChatEvent e) {
+    public void onChat(AsyncChatEvent e) {
         ArkaGrades.Grade.Grades g = grades.get(e.getPlayer().getUniqueId());
-        e.setFormat(g.grd.prefix +" §e"+ e.getPlayer().getName()+" §9>> "+g.grd.suffix+e.getMessage().replace("&","§"));
+        TextComponent tc = Component.text(g.grd.prefix +" §e"+ e.getPlayer().getName()+" §9>> "+g.grd.suffix+e.originalMessage().insertion().replace('&','§'));
+        e.message(tc);
     }
 
 }
