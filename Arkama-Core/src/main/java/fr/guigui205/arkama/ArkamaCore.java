@@ -2,8 +2,10 @@ package fr.guigui205.arkama;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
@@ -13,10 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Hello world!
@@ -52,6 +51,15 @@ public class ArkamaCore extends JavaPlugin {
         itM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         it1.setItemMeta(itM);
         return it1;
+    }
+
+    public static void Broadcast(String msg)
+    {
+        Collection<? extends Player> p = Bukkit.getOnlinePlayers();
+        for (Player player : p)
+        {
+            player.sendMessage(msg);
+        }
     }
 
 }
