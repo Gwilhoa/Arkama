@@ -1,0 +1,15 @@
+name: Arkama-Gamemode
+api-version: 1.16
+version: "5.0.0"
+main: fr.guigui205.arkama.ArkaGamemode
+author: Guigui205 & DaveUltra & Timoreo (spelling by EnkiGaming)
+commands:
+  gamemode:
+    description: "permet de changer de mode de jeu"
+    permission: "ArkaGamemode.Gamemode"
+  gm:
+    description: "permet de changer de mode de jeu"
+    permission: "ArkaGamemode.Gamemode"
+permissions:
+  ArkaGamemode.Gamemode:
+    default: op

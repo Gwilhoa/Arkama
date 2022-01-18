@@ -1,0 +1,37 @@
+name: Arkama-Warps
+api-version: 1.16
+version: "5.0.0"
+main: fr.guigui205.arkama.ArkaWarp
+author: Guigui205 & DaveUltra & Timoreo (spelling by EnkiGaming)
+commands:
+  warp:
+    description: "permet de se téléporter a une zone"
+    permission: "ArkaWarp.warp"
+  warplist:
+    description: "lister toutes les zones posé"
+    permission: "ArkaWarp.warplist"
+  setwarp:
+    description: "poser une zone"
+    permission: "ArkaWarp.setwarp"
+  delwarp:
+    description: "supprimer une zone posé"
+    permission: "ArkaWarp.delwarp"
+  spawn:
+    description: "t'amène au spawn du monde"
+    permission: "ArkaWarp.spawn"
+  setspawn:
+    description: "change le spawn du monde"
+    permission: "ArkaWarp.setspawn"
+permissions:
+  ArkaWarp.setwarp:
+    default: op
+  ArkaWarp.warp:
+    default: true
+  ArkaWarp.warplist:
+    default: true
+  ArkaWarp.delwarp:
+    default: op
+  ArkaWarp.setspawn:
+    default: op
+  ArkaWarp.spawn:
+    default: true

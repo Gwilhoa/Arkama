@@ -1,0 +1,24 @@
+1 lancer le .bat
+dedans mettre le nom du plugin
+mettre l'option par défaut pour les 3 choix suivants (appuyer sur entrée)
+mettre Y pour le dernier choix
+
+2 dans le nouveau dossier crée ouvre le pom.xml
+enlève le tag <url> </url>
+remplace le <maven.compiler.source>1.7</maven.compiler.source>
+         et <maven.compiler.target>1.7</maven.compiler.target>
+par
+ 			<maven.compiler.source>8</maven.compiler.source>
+         et <maven.compiler.target>8</maven.compiler.target>
+enlève le bloc <dependency>
+
+------
+POUR RAJOUTER UNE "DEPENDANCE"
+
+Pour l'exemple, on va dire que je veux rajouter la dépendance Arkama-TP au module Arkama-Homes
+1 ouvrir le pom.xml du fichier Arkama-Homes
+rajouter DANS le bloc <dependencies> (le créer si il n'existe pas)
+<dependency>
+    <groupId>fr.guigui205.arkama</groupId>
+	<artifactId>Arkama-TP</artifactId>
+</dependency>

@@ -1,0 +1,5 @@
+name: Arkama-Teleport
+api-version: 1.16
+version: "5.0.0"
+main: fr.guigui205.arkama.ArkamaTeleport
+author: Guigui205 & DaveUltra & Timoreo (spelling by EnkiGaming)

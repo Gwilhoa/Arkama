@@ -1,0 +1,12 @@
+name: Arkama-Multiverse
+api-version: 1.16
+version: "5.0.0"
+main: fr.guigui205.arkama.ArkaMultiverse
+author: Guigui205 & DaveUltra & Timoreo (spelling by EnkiGaming)
+commands:
+  mv:
+    description: "commandes servant aux monde"
+    permission: "ArkaMultiverse.mv"
+  multiverse:
+    description: "commandes servant aux monde"
+    permission: "ArkaMultiverse.mv"
