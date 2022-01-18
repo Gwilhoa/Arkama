@@ -7,7 +7,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Objects;
 
 public class ArkaGamemode extends JavaPlugin {
     private final String prefix = "§cGamemode §1§l>>>§e";
@@ -17,20 +16,32 @@ public class ArkaGamemode extends JavaPlugin {
         getCommand("gm").setExecutor(this);
         getLogger().warning("[ArkaGamemode] chargé");
     }
+    private GameMode getGameModeById(Integer i)
+    {
+        if (i == 0)
+            return (GameMode.SURVIVAL);
+        if (i == 1)
+            return (GameMode.CREATIVE);
+        if (i == 2)
+            return (GameMode.ADVENTURE);
+        if (i == 3)
+            return (GameMode.SPECTATOR);
+        return (GameMode.CREATIVE);
+    }
     private void setGamemode(Player p, Integer i,CommandSender exec) {
         if (0 <= i && i <= 3) {
-            p.setGameMode(Objects.requireNonNull(GameMode.getByValue(i)));
+            p.setGameMode(getGameModeById(i));
             if (exec instanceof Player){
                 if (exec.equals(p)){
-                    p.sendMessage(prefix + " tu es passé en " + Objects.requireNonNull(GameMode.getByValue(i)));
-                    getLogger().info(p.getName() + " est passé en " + Objects.requireNonNull(GameMode.getByValue(i)));
+                    p.sendMessage(prefix + " tu es passé en " + getGameModeById(i).name());
+                    getLogger().info(p.getName() + " est passé en " + getGameModeById(i).name());
                 } else {
-                    exec.sendMessage(prefix + " " + p.getName() + " est passé en " + Objects.requireNonNull(GameMode.getByValue(i)));
-                    p.sendMessage(prefix + " tu es passé en " + Objects.requireNonNull(GameMode.getByValue(i)));
-                    getLogger().info(p.getName() + " est passé en " + Objects.requireNonNull(GameMode.getByValue(i)) + " par " + exec.getName());
+                    exec.sendMessage(prefix + " " + p.getName() + " est passé en " + getGameModeById(i).name());
+                    p.sendMessage(prefix + " tu es passé en " + getGameModeById(i).name());
+                    getLogger().info(p.getName() + " est passé en " + getGameModeById(i).name() + " par " + exec.getName());
                 }
             } else {
-                getLogger().info(p.getName() + " est passé en " + Objects.requireNonNull(GameMode.getByValue(i)));
+                getLogger().info(p.getName() + " est passé en " + getGameModeById(i).name());
             }
         } else {
             if (exec instanceof Player) {

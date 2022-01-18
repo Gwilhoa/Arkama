@@ -65,7 +65,7 @@ public class ArkaGrades extends JavaPlugin {
                     }
                     if (found != null) {
                         grades.put(cible.getUniqueId(), found);
-                        cible.setPlayerListName(grades.get(p.getUniqueId()).grd.prefix + "§r§e§l" + cible.getName() + "§r");
+                        cible.setPlayerListName(grades.get(cible.getUniqueId()).grd.prefix + "§r§e§l" + cible.getName() + "§r");
                         Grade.saveGrade();
                         if (grades.get(cible.getUniqueId()).smaller(found)) {
                             Bukkit.broadcastMessage("§4Grade §9§l>>> §eFélicitation à " + cible.getName() + " qui vient de passer " + found.grd.prefix);
