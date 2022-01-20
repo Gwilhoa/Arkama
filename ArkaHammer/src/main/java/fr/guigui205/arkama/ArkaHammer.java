@@ -15,6 +15,8 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.kyori.adventure.text.Component;
+
 import java.util.Arrays;
 
 
@@ -22,8 +24,8 @@ public class ArkaHammer extends JavaPlugin {
     private static ItemStack item(Material m,String str){
         ItemStack it = new ItemStack(m);
         ItemMeta im = it.getItemMeta();
-        im.setLore(Arrays.asList("§eArkaHammer",""));
-        im.setDisplayName("Marteau en "+str);
+        im.lore(Arrays.asList(Component.text("§eArkaHammer"),Component.text("")));
+        im.displayName(Component.text("Marteau en "+str));
         it.setItemMeta(im);
         return it;
     }
@@ -138,7 +140,7 @@ class HammerEvent implements Listener {
 
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
-        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta() != null && event.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasLore() && event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore().get(0).equals("§eArkaHammer")) {
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta() != null && event.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasLore() && event.getPlayer().getInventory().getItemInMainHand().getItemMeta().lore().get(0).equals(Component.text("§eArkaHammer"))) {
             Block block = event.getBlock();
             Player player = event.getPlayer();
             int x = block.getX();
