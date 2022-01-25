@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import static fr.guigui205.arkama.ArkaGrades.grades;
@@ -32,5 +33,8 @@ class TablistEvent implements Listener {
         }
         e.setJoinMessage("§7[§a+§7] " + grades.get(e.getPlayer().getUniqueId()).grd.suffix + e.getPlayer().getName());
         e.getPlayer().setPlayerListName(grades.get(e.getPlayer().getUniqueId()).grd.prefix + "§r§e§l" + e.getPlayer().getName() + "§r");
+    }
+    public void onQuit(PlayerQuitEvent e) {
+        e.setQuitMessage("§7[§c-§7] " + grades.get(e.getPlayer().getUniqueId()).grd.suffix + e.getPlayer().getName());
     }
 }

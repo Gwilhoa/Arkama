@@ -1,5 +1,7 @@
-package fr.mediapi.arkama.commands;
+package fr.guigui205.arkama;
 
+import com.google.gson.reflect.TypeToken;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
@@ -8,18 +10,41 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.java.JavaPlugin;
 
-public class CommandEnch implements CommandExecutor {
+import java.io.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
+
+public class ArkaEnchant extends JavaPlugin {
+
+    @Override
+    public void onEnable() {
+        getCommand("enchant").setExecutor(this);
+        getCommand("rename").setExecutor(this);
+
+        getLogger().warning("[ArkaEnchant] chargé");
+    }
 
     public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
         Player p = (Player) sender;
+        if (cmd.getName().equalsIgnoreCase("rename"))
+        {
+            ItemStack iS = p.getInventory().getItemInMainHand();
+            ItemMeta iM = iS.getItemMeta();
+            iM.displayName(Component.text(Arrays.toString(args).replace('&', '§')));
+        }
         if (cmd.getName().equalsIgnoreCase("enchant")) {
             if (args.length == 0) {
                 p.sendMessage("§e§lArka§c§lE§1§lnchant §6§l>> §cmauvais usage : §a/enchant (enchantement) (level)");
                 return false;
             }
             ItemStack it = p.getInventory().getItemInMainHand();
-            if (it != null && it.getType() != Material.AIR) {
+            if (it.getType() != Material.AIR) {
                 try {
                     int lev = Integer.parseInt(args[1]);
                     Enchantment e;

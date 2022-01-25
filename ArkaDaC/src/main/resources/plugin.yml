@@ -1,9 +1,0 @@
-name: Arkama-DAC
-api-version: 1.16
-version: "5.0.0"
-main: fr.guigui205.arkama.ArkaDaC
-author: Guigui205 & DaveUltra & Timoreo (spelling by EnkiGaming)
-commands:
-  dac:
-    permission: "ArkaDac.dac"
-    description: "commande principale du dé a coudre"

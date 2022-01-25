@@ -8,6 +8,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 
 public class ArkaTP extends JavaPlugin {
     private final String prefix = "§1Téléportation §9§l>>>";
@@ -19,6 +22,7 @@ public class ArkaTP extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) return true;
+        ArrayList<Player> Players = new ArrayList<>(Bukkit.getOnlinePlayers());
         Player p = (Player) sender;
         if (command.getName().equalsIgnoreCase("back")){
             if (ArkamaTeleport.oldPos(p) != null){
@@ -29,7 +33,20 @@ public class ArkaTP extends JavaPlugin {
             }
         } else {
             if (args.length == 1){
-                if (Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0]))) {
+                if (args[0].equalsIgnoreCase("@a"))
+                {
+                    for (Player cible : Players)
+                    {
+                        if (!cible.equals(p))
+                            ArkamaTeleport.teleport(cible, p.getLocation(), true);
+                    }
+                }
+                if (args[0].equalsIgnoreCase("@r"))
+                {
+                    int i = new Random().nextInt(Players.size());
+                    ArkamaTeleport.teleport(Players.get(i), p.getLocation(), true);
+                }
+                else if (Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0]))) {
                     ArkamaTeleport.teleport(p, Bukkit.getPlayer(args[0]).getLocation(), true);
                     p.sendMessage(prefix + " tu as été téléporté à " + Bukkit.getPlayer(args[0]).getName());
                 } else {

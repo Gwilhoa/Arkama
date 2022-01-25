@@ -1,0 +1,15 @@
+name: Arkama-Enchant
+api-version: 1.16
+version: "5.0.0"
+main: fr.guigui205.arkama.ArkaEnchant
+author: Guigui205 & DaveUltra & Timoreo (spelling by EnkiGaming)
+commands:
+  enchant:
+    description: "enchater un item"
+    permission: "ArkaEnchant.Enchant"
+  rename:
+    description: "change le nom de ton objet"
+    permission: "ArkaEnchant.rename"
+permissions:
+  ArkaGamemode.Gamemode:
+    default: op

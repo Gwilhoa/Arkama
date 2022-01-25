@@ -17,14 +17,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class ArkaHome extends JavaPlugin {
     private final String prefix = "§bHomes §9§l>>>§e";
-    public static HashMap<UUID, List<Home>> homes = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -37,7 +33,7 @@ public class ArkaHome extends JavaPlugin {
 
         if (new File("Arkama/home.json").exists()) {
             try {
-                homes = ArkamaCore.gson.fromJson(new BufferedReader(new InputStreamReader(new FileInputStream("Arkama/home.json"))), new TypeToken<HashMap<UUID, List<Home>>>() {
+                Home.homes = ArkamaCore.gson.fromJson(new BufferedReader(new InputStreamReader(new FileInputStream("Arkama/home.json"))), new TypeToken<HashMap<UUID, List<Home>>>() {
                 }.getType());
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -50,8 +46,8 @@ public class ArkaHome extends JavaPlugin {
                 e.printStackTrace();
             }
         }
-        if (homes == null) {
-            homes = new HashMap<>();
+        if (Home.homes == null) {
+            Home.homes = new HashMap<>();
         }
         getLogger().warning("[ArkaHome] chargé");
     }
@@ -72,8 +68,8 @@ public class ArkaHome extends JavaPlugin {
         if (command.getName().equalsIgnoreCase("home")) {
             if (command.getName().equalsIgnoreCase("home")) {
                 Player p = (Player) sender;
-                if (!homes.isEmpty() && homes.containsKey(p.getUniqueId())) {
-                    for (Home h : homes.get(p.getUniqueId())) {
+                if (!Home.homes.isEmpty() && Home.homes.containsKey(p.getUniqueId())) {
+                    for (Home h : Home.homes.get(p.getUniqueId())) {
                         if (h.name.equalsIgnoreCase(s)) {
                             if (p.getGameMode().equals(GameMode.CREATIVE) || p.getGameMode().equals(GameMode.SPECTATOR)) {
                                 ArkamaTeleport.teleport(p, h.getpos(), true);
@@ -94,23 +90,23 @@ public class ArkaHome extends JavaPlugin {
                 }
             }
         } else if (command.getName().equalsIgnoreCase("sethome")) {
-            if (homes == null || homes.get(((Player) sender).getUniqueId()) == null) {
+            if (Home.homes == null || Home.homes.get(((Player) sender).getUniqueId()) == null) {
                 ArrayList<Home> set = new ArrayList<>();
                 set.add(new Home(s, ((Player) sender).getLocation()));
-                homes.put(((Player) sender).getUniqueId(), set);
+                Home.homes.put(((Player) sender).getUniqueId(), set);
             } else {
-                ArrayList<Home> set = new ArrayList<>(homes.get(((Player) sender).getUniqueId()));
+                ArrayList<Home> set = new ArrayList<>(Home.homes.get(((Player) sender).getUniqueId()));
                 set.removeIf(h -> h.name.equalsIgnoreCase(s));
-                if (homes.get(((Player) sender).getUniqueId()).size() > 4) {
+                if (Home.homes.get(((Player) sender).getUniqueId()).size() > 12 && !s.equals( "home")) {
                     sender.sendMessage(prefix + " vous possedez trop de home");
                     return false;
                 }
                 set.add(new Home(s, ((Player) sender).getLocation()));
-                homes.put(((Player) sender).getUniqueId(), set);
+                Home.homes.put(((Player) sender).getUniqueId(), set);
             }
             sender.sendMessage(prefix + " home posé avec succès");
         } else {
-            if (homes.containsKey(((Player) sender).getUniqueId())){
+            if (Home.homes.containsKey(((Player) sender).getUniqueId())){
                 Inventory inv = Bukkit.createInventory(null, 27, command.getName());
             for (int i = 0; i <= 26; i++) {
                 ItemStack it1 = new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
@@ -118,12 +114,20 @@ public class ArkaHome extends JavaPlugin {
                 it1.setItemMeta(itM);
                 inv.setItem(i, it1);
             }
-            List<Home> hList = homes.get(((Player) sender).getUniqueId());
+            List<Home> hList = Home.homes.get(((Player) sender).getUniqueId());
             ArrayList<Integer> l = new ArrayList<Integer>();
-            l.add(16);
+            l.add(1);
+            l.add(2);
             l.add(10);
-            l.add(15);
             l.add(11);
+            l.add(19);
+            l.add(20);
+            l.add(6);
+            l.add(7);
+            l.add(15);
+            l.add(16);
+            l.add(24);
+            l.add(25);
             int i = l.size() - 1;
             for (Home h : hList) {
                 if (h.name.equals("home")) {
@@ -142,6 +146,98 @@ public class ArkaHome extends JavaPlugin {
                 sender.sendMessage(prefix + " tu as aucun home enregistré");
             }
         }
+        if (new File("Arkama/home.json").exists()) {
+            try {
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Arkama/home.json")));
+                ArkamaCore.gson.toJson(Home.homes, new TypeToken<HashMap<UUID, List<Home>>>() {
+                }.getType(), bw);
+                bw.flush();
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Fichier inexistant !");
+            try {
+                new File("Arkama/home.json").createNewFile();
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Arkama/home.json")));
+                ArkamaCore.gson.toJson(Home.homes, new TypeToken<HashMap<UUID, List<Home>>>() {
+                }.getType(), bw);
+                bw.flush();
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
+    }
+}
+
+class HomeEvent implements Listener {
+    private final String prefix = "§bHomes §9§l>>>§e";
+    @EventHandler
+    public void onClick(InventoryClickEvent e) {
+        Inventory inv = e.getInventory();
+        Player p = (Player) e.getWhoClicked();
+        if (e.getView().getTitle().equals("homelist")) {
+            ItemStack current = e.getCurrentItem();
+            if (current == null) return;
+            e.setCancelled(true);
+            if (current.getType().equals(Material.LIME_STAINED_GLASS_PANE)) {
+                for (Home h : Home.homes.get(p.getUniqueId())) {
+                    if (h.name.equals(current.getItemMeta().getDisplayName())) {
+                        if (p.getGameMode().equals(GameMode.CREATIVE) || p.getGameMode().equals(GameMode.SPECTATOR)) {
+                            ArkamaTeleport.teleport(p, h.getpos(), true);
+                        } else {
+                            boolean f = ArkamaTeleport.teleport(p, h.getpos(), false);
+                            if (!f) {
+                                return;
+                            }
+                        }
+                        p.sendMessage(prefix + " tu as été téléporté à " + h.name);
+                    }
+                }
+            }
+        } else if (e.getView().getTitle().equals("delhome")) {
+            ItemStack current = e.getCurrentItem();
+            if (current == null) return;
+            e.setCancelled(true);
+            if (current.getType().equals(Material.LIME_STAINED_GLASS_PANE)) {
+                for (Home h : Home.homes.get(p.getUniqueId())) {
+                    if (h.name.equals(current.getItemMeta().getDisplayName())) {
+                        Home.homes.get(p.getUniqueId()).remove(h);
+                        p.sendMessage(prefix + " " + h.name + " supprimé avec succès");
+                        h.save();
+                        p.closeInventory();
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+class Home {
+    public String name;
+    public String world;
+    public Double x;
+    public Double y;
+    public Double z;
+    public static HashMap<UUID, List<Home>> homes = new HashMap<>();
+
+    public Home(String name, Location pos) {
+        this.name = name;
+        this.world = pos.getWorld().getName();
+        this.x = pos.getX();
+        this.y = pos.getY();
+        this.z = pos.getZ();
+    }
+    public Location getpos(){
+        return new Location(Bukkit.getWorld(this.world),this.x,this.y,this.z);
+
+    }
+    public void save()
+    {
         if (new File("Arkama/home.json").exists()) {
             try {
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Arkama/home.json")));
@@ -165,70 +261,6 @@ public class ArkaHome extends JavaPlugin {
                 e.printStackTrace();
             }
         }
-        return true;
-    }
-}
-
-class HomeEvent implements Listener {
-    private final String prefix = "§bHomes §9§l>>>§e";
-    @EventHandler
-    public void onClick(InventoryClickEvent e) {
-        Inventory inv = e.getInventory();
-        Player p = (Player) e.getWhoClicked();
-        if (e.getView().getTitle().equals("homelist")) {
-            ItemStack current = e.getCurrentItem();
-            if (current == null) return;
-            e.setCancelled(true);
-            if (current.getType().equals(Material.LIME_STAINED_GLASS_PANE)) {
-                for (Home h : ArkaHome.homes.get(p.getUniqueId())) {
-                    if (h.name.equals(current.getItemMeta().getDisplayName())) {
-                        if (p.getGameMode().equals(GameMode.CREATIVE) || p.getGameMode().equals(GameMode.SPECTATOR)) {
-                            ArkamaTeleport.teleport(p, h.getpos(), true);
-                        } else {
-                            boolean f = ArkamaTeleport.teleport(p, h.getpos(), false);
-                            if (!f) {
-                                return;
-                            }
-                        }
-                        p.sendMessage(prefix + " tu as été téléporté à " + h.name);
-                    }
-                }
-            }
-        } else if (e.getView().getTitle().equals("delhome")) {
-            ItemStack current = e.getCurrentItem();
-            if (current == null) return;
-            e.setCancelled(true);
-            if (current.getType().equals(Material.LIME_STAINED_GLASS_PANE)) {
-                for (Home h : ArkaHome.homes.get(p.getUniqueId())) {
-                    if (h.name.equals(current.getItemMeta().getDisplayName())) {
-                        ArkaHome.homes.remove(p.getUniqueId(), h);
-                        p.sendMessage(prefix + " " + h.name + " supprimé avec succès");
-                        p.closeInventory();
-                    }
-                }
-            }
-        }
-
-    }
-}
-
-class Home {
-    public String name;
-    public String world;
-    public Double x;
-    public Double y;
-    public Double z;
-
-    public Home(String name, Location pos) {
-        this.name = name;
-        this.world = pos.getWorld().getName();
-        this.x = pos.getX();
-        this.y = pos.getY();
-        this.z = pos.getZ();
-    }
-    public Location getpos(){
-        return new Location(Bukkit.getWorld(this.world),this.x,this.y,this.z);
-
     }
     @Override
     public String toString() {
