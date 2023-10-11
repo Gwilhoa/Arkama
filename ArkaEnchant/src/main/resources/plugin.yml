@@ -5,11 +5,11 @@ main: fr.guigui205.arkama.ArkaEnchant
 author: Guigui205 & DaveUltra & Timoreo (spelling by EnkiGaming)
 commands:
   enchant:
-    description: "enchater un item"
+    description: "enchanter un item"
     permission: "ArkaEnchant.Enchant"
   rename:
     description: "change le nom de ton objet"
     permission: "ArkaEnchant.rename"
 permissions:
-  ArkaGamemode.Gamemode:
+  ArkaGamemode.Enchant:
     default: op

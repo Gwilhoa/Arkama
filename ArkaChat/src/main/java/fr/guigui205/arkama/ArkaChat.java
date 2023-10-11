@@ -27,7 +27,7 @@ class ChatEvent implements Listener {
     @EventHandler
     public void onChat(AsyncChatEvent e) {
         ArkaGrades.Grade.Grades g = grades.get(e.getPlayer().getUniqueId());
-        TextComponent tc = Component.text(g.grd.prefix +" §e"+ e.getPlayer().getName()+" §9>> "+g.grd.suffix+e.originalMessage().insertion().replace('&','§'));
+        TextComponent tc = Component.text(g.grd.prefix +" §e"+ e.getPlayer().getName()+" §9>> "+g.grd.suffix+e.originalMessage());
         e.message(tc);
     }
 

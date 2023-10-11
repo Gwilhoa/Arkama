@@ -6,6 +6,7 @@ import fr.mediapi.arkama.menu.main;
 import fr.mediapi.arkama.murder.Game;
 import fr.mediapi.arkama.murder.Murder;
 import fr.mediapi.arkama.objects.Grade;
+import io.papermc.paper.chat.ChatRenderer;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Skull;
