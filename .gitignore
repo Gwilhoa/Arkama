@@ -1,5 +1,4 @@
 .idea
-*/target
+data/**/target
 **/**.iml
 Arkama.iml
-**/target

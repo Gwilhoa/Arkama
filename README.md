@@ -16,10 +16,10 @@ Arkama est un projet de serveur minecraft minijeux/ survie/ creatif, aujourd'hui
 ```markdown
 .
 ├── data
-│   ├── plugins
-│   │   └── contient tout les plugins
-│   └── Arkama-Core
+│   └── contient tout les plugins
+│
 ├── documentation
+│
 ├── envs
 │   ├── dev
 │   └── test
