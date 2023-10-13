@@ -122,7 +122,6 @@ public class Arkama extends JavaPlugin implements CommandExecutor {
         getCommand("feed").setExecutor(new CommandSoin());
         getCommand("rl").setExecutor(new CommandSimple());
         getCommand("kick").setExecutor(new CommandSimple());
-        getCommand("enchant").setExecutor(new CommandEnch());
         getCommand("vanish").setExecutor(new CommandVanish());
         getCommand("msg").setExecutor(new CommandMsg());
         getCommand("kill").setExecutor(new Commandkill());
@@ -130,7 +129,6 @@ public class Arkama extends JavaPlugin implements CommandExecutor {
         getCommand("speed").setExecutor(new CommandSpeed());
         getCommand("rename").setExecutor(new CommandRename());
         getCommand("murder").setExecutor(new CommandMain());
-        getCommand("setgrade").setExecutor(new CommandGrade());
         getCommand("r").setExecutor(new CommandMsg());
         getCommand("money").setExecutor(new CommandMoney());
         getCommand("kit").setExecutor(new CommandKit());

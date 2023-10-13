@@ -1,0 +1,29 @@
+name: Docker Deployment and Command Execution
+
+on: [push]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: docker build -t my-minecraft-server:latest .
+
+      - name: Start Docker container
+        run: docker run -d --name minecraft-server -p 25565:25565 my-minecraft-server:latest
+
+      - name: Wait for Docker container to start
+        run: sleep 10
+
+      - name: Check if Docker container is running
+        run: docker ps | grep minecraft-server
+
+      - name: Execute command in Minecraft console
+        run: docker exec -i minecraft-server rcon-cli "plugins"
+
+      - name: Stop Docker container
+        run: docker stop minecraft-server

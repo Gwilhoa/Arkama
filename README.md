@@ -21,8 +21,7 @@ Arkama est un projet de serveur minecraft minijeux/ survie/ creatif, aujourd'hui
 ├── documentation
 │
 ├── envs
-│   ├── dev
-│   └── test
+│   └──dev
 │
 └── scripts
 
@@ -55,14 +54,6 @@ sudo apt-get maven
 ```shell
 brew install java
 brew install maven
-```
-#### le serveur
-il vous faut un serveur minecraft paper, la version recommandés pour les plugins est paper 1.20.1 #227
-
-#### Linux/ Macos 
-si vous n'avez pas le serveur en question executez la commande suivante :
-```bash
-bash scripts/create_server.sh
 ```
 
 ##### compilation des plugins
