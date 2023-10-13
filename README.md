@@ -1,7 +1,6 @@
 # Arkama Plugin manager
 LOGO MEDIAPI
 
-LOGO ARKAMA
 
 
 Arkama est un projet de serveur minecraft minijeux/ survie/ creatif, aujourd'hui abandonné il a été repris pour le developpement d'un serveur privé au sein de l'organisation mediapi.org
