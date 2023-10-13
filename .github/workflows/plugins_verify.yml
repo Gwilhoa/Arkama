@@ -22,8 +22,6 @@ jobs:
       - name: Check if Docker container is running
         run: docker ps | grep minecraft-server
 
-      - name: Execute command in Minecraft console using mcrcon
-        run: mcrcon -H localhost -P 25575 -p   "plugins"
 
       - name: Stop Docker container
         run: docker stop minecraft-server
