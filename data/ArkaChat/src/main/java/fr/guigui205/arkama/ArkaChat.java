@@ -5,6 +5,7 @@ import io.papermc.paper.chat.ChatRenderer;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -57,21 +58,21 @@ public class ArkaChat extends JavaPlugin {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) return true;
         Player p = (Player) sender;
+        StringBuilder sb = new StringBuilder();
+        for (String s : args) {
+            sb.append(s).append(" ");
+        }
         if (command.getName().equalsIgnoreCase("setprefix")) {
-            if (args.length == 1) {
                 ChatConfig config = ChatConfig.chatConfig.computeIfAbsent(p.getUniqueId(), k -> new ChatConfig(" §7", " §r"));
-                config.prefix = args[0].replace("&", "§");
+                config.prefix = sb.toString().replace("&", "§").trim();
                 config.save();
-                sender.sendMessage(PREFIX + " Prefix set to " + args[0]);
-            }
+                sender.sendMessage(PREFIX + " Prefix set to " + sb.toString());
         }
         if (command.getName().equalsIgnoreCase("setsuffix")) {
-            if (args.length == 1) {
                 ChatConfig config = ChatConfig.chatConfig.computeIfAbsent(p.getUniqueId(), k -> new ChatConfig(" §7", " §r"));
-                config.suffix = args[0].replace("&", "§");
+                config.suffix = sb.toString().replace("&", "§").trim();
                 config.save();
-                sender.sendMessage(PREFIX + " Suffix set to " + args[0]);
-            }
+                sender.sendMessage(PREFIX + " Suffix set to " + sb.toString());
         }
         return true;
     }
@@ -89,12 +90,13 @@ class ChatEvent implements Listener, ChatRenderer {
     @Override
     public @NotNull Component render(@NotNull Player source, @NotNull Component sourceDisplayName, @NotNull Component message, @NotNull Audience viewer) {
         ChatConfig config = ChatConfig.chatConfig.get(source.getPlayer().getUniqueId());
+        String messageContent = PlainTextComponentSerializer.plainText().serialize(message);
         if (config == null) {
             config = new ChatConfig("§7", "§r");
             ChatConfig.chatConfig.put(source.getPlayer().getUniqueId(), config);
             config.save();
         }
-        return Component.text(config.prefix + source.getName()+" §9>> "+config.suffix).append(message);
+        return Component.text(config.prefix + source.getName()+" §9>> "+config.suffix + messageContent);
     }
 }
 

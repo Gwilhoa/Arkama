@@ -46,7 +46,12 @@ public class ArkaEnchant extends JavaPlugin implements TabCompleter {
         {
             ItemStack iS = p.getInventory().getItemInMainHand();
             ItemMeta iM = iS.getItemMeta();
-            iM.displayName(Component.text(Arrays.toString(args).replace('&', '§')));
+            StringBuilder sb = new StringBuilder();
+            for (String s : args) {
+                sb.append(s).append(" ");
+            }
+            iM.displayName(Component.text(sb.toString().replace('&', '§').trim()));
+            iS.setItemMeta(iM);
         }
         if (cmd.getName().equalsIgnoreCase("enchant")) {
             if (args.length == 0) {

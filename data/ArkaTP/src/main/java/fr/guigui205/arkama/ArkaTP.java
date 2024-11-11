@@ -32,24 +32,26 @@ public class ArkaTP extends JavaPlugin {
                 p.sendMessage(prefix + " tu n'as pas d'ancienne zone de téléportation");
             }
         } else {
+            for (int i = 0; i < args.length; i++) {
+                String s = args[i];
+                if (s.equalsIgnoreCase("@r")) {
+                    Random r = new Random();
+                    Player cible = Players.get(r.nextInt(Players.size()));
+                    args[i] = cible.getName();
+                }
+            }
             if (args.length == 1){
-                if (args[0].equalsIgnoreCase("@a"))
-                {
-                    for (Player cible : Players)
-                    {
-                        if (!cible.equals(p))
-                            ArkamaTeleport.teleport(cible, p.getLocation(), true);
-                    }
-                }
-                if (args[0].equalsIgnoreCase("@r"))
-                {
-                    int i = new Random().nextInt(Players.size());
-                    ArkamaTeleport.teleport(Players.get(i), p.getLocation(), true);
-                }
-                else if (Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0]))) {
+                if (Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0]))) {
                     ArkamaTeleport.teleport(p, Bukkit.getPlayer(args[0]).getLocation(), true);
                     p.sendMessage(prefix + " tu as été téléporté à " + Bukkit.getPlayer(args[0]).getName());
                 } else {
+                    if (args[0].equalsIgnoreCase("@a")) {
+                        for (Player cible : Players)
+                        {
+                            if (!cible.equals(p))
+                                ArkamaTeleport.teleport(cible, p.getLocation(), true);
+                        }
+                    }
                     p.sendMessage(prefix + " joueur déconnecté ou inexistant");
                 }
             } else if (args.length == 2){
@@ -61,9 +63,12 @@ public class ArkaTP extends JavaPlugin {
                 }
             } else if (args.length == 3) {
                 try {
-                    int x = Integer.parseInt(args[0]);
-                    int y = Integer.parseInt(args[1]);
-                    int z = Integer.parseInt(args[2]);
+                    String strX = args[0].equals("~") ? "0" : args[0].replace("~", "");
+                    String strY = args[1].equals("~") ? "0" : args[1].replace("~", "");
+                    String strZ = args[2].equals("~") ? "0" : args[2].replace("~", "");
+                    int x = args[0].contains("~") ? p.getLocation().getBlockX() + Integer.parseInt(strX) : Integer.parseInt(strX);
+                    int y = args[1].contains("~") ? p.getLocation().getBlockY() + Integer.parseInt(strY) : Integer.parseInt(strY);
+                    int z = args[2].contains("~") ? p.getLocation().getBlockZ() + Integer.parseInt(strZ) : Integer.parseInt(strZ);
                     ArkamaTeleport.teleport(p, new Location(p.getWorld(), x, y, z), true);
                     p.sendMessage(prefix + " tu as été téléporté aux coordonées " + x + " " + y + " " + z);
                 } catch (NumberFormatException e) {
