@@ -31,7 +31,7 @@ public class ArkamaTeleport extends JavaPlugin {
     }
 
     public static boolean teleport(Player p, Location l, boolean f) {
-        if (f) {
+        if (true) {
             oldpos.put(p.getUniqueId(), p.getLocation());
             return p.teleport(l);
         } else {
