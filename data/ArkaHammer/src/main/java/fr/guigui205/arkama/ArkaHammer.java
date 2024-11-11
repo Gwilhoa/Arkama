@@ -6,6 +6,9 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,11 +19,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.List;
 
 
-public class ArkaHammer extends JavaPlugin {
+public class ArkaHammer extends JavaPlugin implements TabCompleter {
     private static ItemStack item(Material m,String str){
         ItemStack it = new ItemStack(m);
         ItemMeta im = it.getItemMeta();
@@ -29,8 +34,46 @@ public class ArkaHammer extends JavaPlugin {
         it.setItemMeta(im);
         return it;
     }
+
+    @Override
+    public @Nullable List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        if (args.length == 1) {
+            return Arrays.asList("pierre", "fer", "or", "diamant", "netherite");
+        }
+        return null;
+    }
+
+
+    public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
+        if (!(sender instanceof Player)) return true;
+        Player p = (Player) sender;
+        if (cmd.getName().equalsIgnoreCase("gethammer")) {
+            if (args.length == 0) {
+                p.sendMessage("§e§lArka§c§lHammer §6§l>> §cmauvais usage : §a/gethammer (type)");
+                return false;
+            }
+            if (args[0].equalsIgnoreCase("pierre")) {
+                p.getInventory().addItem(item(Material.STONE_PICKAXE,"pierre"));
+            } else if (args[0].equalsIgnoreCase("fer")) {
+                p.getInventory().addItem(item(Material.IRON_PICKAXE,"fer"));
+            } else if (args[0].equalsIgnoreCase("or")) {
+                p.getInventory().addItem(item(Material.GOLDEN_PICKAXE,"or"));
+            } else if (args[0].equalsIgnoreCase("diamant")) {
+                p.getInventory().addItem(item(Material.DIAMOND_PICKAXE,"diamant"));
+            } else if (args[0].equalsIgnoreCase("netherite")) {
+                p.getInventory().addItem(item(Material.NETHERITE_PICKAXE,"netherite"));
+            } else {
+                p.sendMessage("§e§lArka§c§lHammer §6§l>> §cmauvais usage : §a/hammer (type)");
+            }
+        }
+        return true;
+    }
+
     @Override
     public void onEnable(){
+        getCommand("gethammer").setExecutor(this);
+
+
         ItemStack SH = item(Material.STONE_PICKAXE,"pierre");
         Bukkit.addRecipe(new ShapedRecipe(new NamespacedKey(this,"stonehammer"),SH).shape(
                 "III",

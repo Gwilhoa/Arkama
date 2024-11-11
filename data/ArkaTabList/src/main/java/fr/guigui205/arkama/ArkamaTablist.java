@@ -1,13 +1,12 @@
 package fr.guigui205.arkama;
 
-import org.bukkit.Bukkit;
+import net.kyori.adventure.text.Component;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import static fr.guigui205.arkama.ArkaGrades.grades;
 
 
 public class ArkamaTablist extends JavaPlugin {
@@ -26,15 +25,13 @@ public class ArkamaTablist extends JavaPlugin {
 class TablistEvent implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        if (!grades.containsKey(e.getPlayer().getUniqueId())) {
-            Bukkit.broadcastMessage("bienvenue à " + e.getPlayer().getName());
-            grades.put(e.getPlayer().getUniqueId(), ArkaGrades.Grade.Grades.JOUEUR);
-            ArkaGrades.Grade.saveGrade();
-        }
-        e.setJoinMessage("§7[§a+§7] " + grades.get(e.getPlayer().getUniqueId()).grd.suffix + e.getPlayer().getName());
-        e.getPlayer().setPlayerListName(grades.get(e.getPlayer().getUniqueId()).grd.prefix + "§r§e§l" + e.getPlayer().getName() + "§r");
+        Player p = e.getPlayer();
+        e.joinMessage(Component.text("§7[§a+§7] " + e.getPlayer().getName()));
+        e.getPlayer().playerListName(Component.text("§r§e§l" + e.getPlayer().getName() + "§r"));
+        p.sendActionBar(Component.text("§eBienvenue sur Bitumemc"));
+
     }
     public void onQuit(PlayerQuitEvent e) {
-        e.setQuitMessage("§7[§c-§7] " + grades.get(e.getPlayer().getUniqueId()).grd.suffix + e.getPlayer().getName());
+        e.quitMessage(Component.text("§7[§c-§7] " + e.getPlayer().getName()));
     }
 }

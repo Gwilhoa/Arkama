@@ -244,7 +244,6 @@ public class ArkaGrades extends JavaPlugin {
         @EventHandler
         public void onJoin(PlayerJoinEvent e){
             if (!grades.containsKey(e.getPlayer().getUniqueId())){
-                Bukkit.broadcastMessage("bienvenue à "+e.getPlayer().getName());
                 grades.put(e.getPlayer().getUniqueId(), Grade.Grades.JOUEUR);
                 Grade.saveGrade();
             }

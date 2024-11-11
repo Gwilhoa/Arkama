@@ -4,11 +4,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
-public class ArkaGamemode extends JavaPlugin {
+public class ArkaGamemode extends JavaPlugin implements TabCompleter {
     private final String prefix = "§cGamemode §1§l>>>§e";
     @Override
     public void onEnable() {
@@ -16,6 +22,25 @@ public class ArkaGamemode extends JavaPlugin {
         getCommand("gm").setExecutor(this);
         getLogger().warning("[ArkaGamemode] chargé");
     }
+
+    @Override
+    public @Nullable List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        if (args.length == 1) {
+            List<String> l = Bukkit.getOnlinePlayers().stream()
+                    .map(Player::getName)
+                    .filter(name -> name.toLowerCase().startsWith(args[0].toLowerCase()))
+                    .collect(Collectors.toList());
+            l.addAll(Arrays.asList("0", "1", "2", "3", "survival", "creative", "adventure", "spectator"));
+            return l;
+        } else if (args.length == 2) {
+            List<String> gamemodes = Arrays.asList("0", "1", "2", "3", "survival", "creative", "adventure", "spectator");
+            return gamemodes.stream()
+                    .filter(mode -> mode.toLowerCase().startsWith(args[1].toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+        return null;
+    }
+
     private GameMode getGameModeById(Integer i)
     {
         if (i == 0)

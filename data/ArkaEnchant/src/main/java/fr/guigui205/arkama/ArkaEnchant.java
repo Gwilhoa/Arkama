@@ -7,11 +7,13 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
 import java.util.Arrays;
@@ -20,7 +22,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class ArkaEnchant extends JavaPlugin {
+public class ArkaEnchant extends JavaPlugin implements TabCompleter {
 
     @Override
     public void onEnable() {
@@ -28,6 +30,14 @@ public class ArkaEnchant extends JavaPlugin {
         getCommand("rename").setExecutor(this);
 
         getLogger().warning("[ArkaEnchant] chargé");
+    }
+
+    @Override
+    public @Nullable List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        if (args.length == 1) {
+            return Arrays.asList("protection", "fire_protection", "feather_falling", "blast_protection", "projectile_protection", "respiration", "aqua_affinity", "thorns", "depth_strider", "frost_walker", "binding_curse", "sharpness", "smite", "bane_of_arthropods", "knockback", "fire_aspect", "looting", "sweeping", "efficiency", "silk_touch", "unbreaking", "fortune", "power", "punch", "flame", "infinity", "luck_of_the_sea", "lure", "loyalty", "impaling", "riptide", "channeling", "multishot", "quick_charge", "piercing", "mending", "vanishing_curse");
+        }
+        return null;
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {

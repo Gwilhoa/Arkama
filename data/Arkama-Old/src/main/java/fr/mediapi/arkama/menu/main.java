@@ -30,7 +30,7 @@ public class main {
         inv.setItem(6, getItem(Material.DIAMOND_SWORD, "§eFaction", "§4Allez au faction !"));
         inv.setItem(10, getItem(Material.BLAZE_ROD, "§eCombat de magie", "§4Ne fonctionne pas encore"));
         inv.setItem(12, getItem(Material.POPPY, "§ePousse-Pousse", "§4Ne fonctionne pas encore"));
-        inv.setItem(14, getItem(Material.GRASS, "§eSkyBlock", "§4Dev suspendu"));
+        inv.setItem(14, getItem(Material.GRASS_BLOCK, "§eSkyBlock", "§4Dev suspendu"));
         inv.setItem(16, getItem(Material.ARROW, "§eSkyWars", "§4Dev suspendu"));
         inv.setItem(19, getItem(Material.BLUE_BANNER, "§eCapture The Flag", "§4En dev"));
         inv.setItem(21, getItem(Material.IRON_SWORD, "§ePvP", "§4Dev suspendu"));
