@@ -34,6 +34,9 @@ public class ArkaTP extends JavaPlugin {
         } else {
             for (int i = 0; i < args.length; i++) {
                 String s = args[i];
+                if (s.equalsIgnoreCase("@s")) {
+                    args[i] = p.getName();
+                }
                 if (s.equalsIgnoreCase("@r")) {
                     Random r = new Random();
                     Player cible = Players.get(r.nextInt(Players.size()));
