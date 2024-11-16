@@ -63,13 +63,13 @@ public class ArkaChat extends JavaPlugin {
             sb.append(s).append(" ");
         }
         if (command.getName().equalsIgnoreCase("setprefix")) {
-                ChatConfig config = ChatConfig.chatConfig.computeIfAbsent(p.getUniqueId(), k -> new ChatConfig(" §7", " §r"));
-                config.prefix = sb.toString().replace("&", "§").trim();
+                ChatConfig config = ChatConfig.chatConfig.computeIfAbsent(p.getUniqueId(), k -> new ChatConfig(" &7", " &r"));
+                config.prefix = sb.toString().trim();
                 config.save();
                 sender.sendMessage(PREFIX + " Prefix set to " + sb.toString());
         }
         if (command.getName().equalsIgnoreCase("setsuffix")) {
-                ChatConfig config = ChatConfig.chatConfig.computeIfAbsent(p.getUniqueId(), k -> new ChatConfig(" §7", " §r"));
+                ChatConfig config = ChatConfig.chatConfig.computeIfAbsent(p.getUniqueId(), k -> new ChatConfig(" &7", " &r"));
                 config.suffix = sb.toString().replace("&", "§").trim();
                 config.save();
                 sender.sendMessage(PREFIX + " Suffix set to " + sb.toString());
@@ -92,11 +92,11 @@ class ChatEvent implements Listener, ChatRenderer {
         ChatConfig config = ChatConfig.chatConfig.get(source.getPlayer().getUniqueId());
         String messageContent = PlainTextComponentSerializer.plainText().serialize(message);
         if (config == null) {
-            config = new ChatConfig("§7", "§r");
+            config = new ChatConfig("&7", "&r");
             ChatConfig.chatConfig.put(source.getPlayer().getUniqueId(), config);
             config.save();
         }
-        return Component.text(config.prefix + source.getName()+" §9>> "+config.suffix + messageContent);
+        return Component.text(config.prefix.replace("&", "§") + source.getName()+" §9>> "+config.suffix.replace("&", "§") + messageContent.replace("&", "§"));
     }
 }
 
