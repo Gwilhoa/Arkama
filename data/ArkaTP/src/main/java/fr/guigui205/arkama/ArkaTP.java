@@ -3,6 +3,8 @@ package fr.guigui205.arkama;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.block.CommandBlock;
+import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -21,6 +23,14 @@ public class ArkaTP extends JavaPlugin {
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (sender instanceof BlockCommandSender) {
+            StringBuilder commandToExecute = new StringBuilder("minecraft:tp");
+            for (String arg : args) {
+                commandToExecute.append(" ").append(arg);
+            }
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), commandToExecute.toString());
+            return true;
+        }
         if (!(sender instanceof Player)) return true;
         ArrayList<Player> Players = new ArrayList<>(Bukkit.getOnlinePlayers());
         Player p = (Player) sender;
@@ -34,6 +44,22 @@ public class ArkaTP extends JavaPlugin {
         } else {
             for (int i = 0; i < args.length; i++) {
                 String s = args[i];
+                if (s.contains("[") && s.contains("]")) {
+                    StringBuilder commandToExecute = new StringBuilder("minecraft:tp");
+                    for (String arg : args) {
+                        commandToExecute.append(" ").append(arg);
+                    }
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), commandToExecute.toString());
+                    return true;
+                }
+                if (s.equalsIgnoreCase("@e")) {
+                    StringBuilder commandToExecute = new StringBuilder("minecraft:tp");
+                    for (String arg : args) {
+                        commandToExecute.append(" ").append(arg);
+                    }
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), commandToExecute.toString());
+                    return true;
+                }
                 if (s.equalsIgnoreCase("@s")) {
                     args[i] = p.getName();
                 }
@@ -81,9 +107,9 @@ public class ArkaTP extends JavaPlugin {
                 Player c = Bukkit.getPlayer(args[0]);
                 if (Bukkit.getOnlinePlayers().contains(c)) {
                     try {
-                        int x = Integer.parseInt(args[1]);
-                        int y = Integer.parseInt(args[2]);
-                        int z = Integer.parseInt(args[3]);
+                        double x = Double.parseDouble(args[1]);
+                        double y = Double.parseDouble(args[2]);
+                        double z = Double.parseDouble(args[3]);
                         ArkamaTeleport.teleport(p, new Location(p.getWorld(), x, y, z), true);
                         p.sendMessage(prefix + " tu as été téléporté aux coordonées " + x + " " + y + " " + z);
                     } catch (NumberFormatException e) {
