@@ -3,7 +3,6 @@ package fr.guigui205.arkama;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.block.CommandBlock;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -16,11 +15,13 @@ import java.util.Random;
 
 public class ArkaTP extends JavaPlugin {
     private final String prefix = "§1Téléportation §9§l>>>";
+
     @Override
-    public void onEnable(){
+    public void onEnable() {
         getCommand("tp").setExecutor(this);
         getCommand("back").setExecutor(this);
     }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof BlockCommandSender) {
@@ -34,8 +35,8 @@ public class ArkaTP extends JavaPlugin {
         if (!(sender instanceof Player)) return true;
         ArrayList<Player> Players = new ArrayList<>(Bukkit.getOnlinePlayers());
         Player p = (Player) sender;
-        if (command.getName().equalsIgnoreCase("back")){
-            if (ArkamaTeleport.oldPos(p) != null){
+        if (command.getName().equalsIgnoreCase("back")) {
+            if (ArkamaTeleport.oldPos(p) != null) {
                 p.sendMessage(prefix + " tu as été téléporté à ton ancienne position");
                 ArkamaTeleport.teleport(p, ArkamaTeleport.oldPos(p), p.getGameMode().equals(GameMode.CREATIVE) || p.getGameMode().equals(GameMode.SPECTATOR));
             } else {
@@ -52,7 +53,7 @@ public class ArkaTP extends JavaPlugin {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), commandToExecute.toString());
                     return true;
                 }
-                if (s.equalsIgnoreCase("@e")) {
+                if (s.startsWith("@e")) {
                     StringBuilder commandToExecute = new StringBuilder("minecraft:tp");
                     for (String arg : args) {
                         commandToExecute.append(" ").append(arg);
@@ -69,22 +70,21 @@ public class ArkaTP extends JavaPlugin {
                     args[i] = cible.getName();
                 }
             }
-            if (args.length == 1){
+            if (args.length == 1) {
                 if (Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0]))) {
                     ArkamaTeleport.teleport(p, Bukkit.getPlayer(args[0]).getLocation(), true);
                     p.sendMessage(prefix + " tu as été téléporté à " + Bukkit.getPlayer(args[0]).getName());
                 } else {
                     if (args[0].equalsIgnoreCase("@a")) {
-                        for (Player cible : Players)
-                        {
+                        for (Player cible : Players) {
                             if (!cible.equals(p))
                                 ArkamaTeleport.teleport(cible, p.getLocation(), true);
                         }
                     }
                     p.sendMessage(prefix + " joueur déconnecté ou inexistant");
                 }
-            } else if (args.length == 2){
-                if (Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0])) && Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[1]))){
+            } else if (args.length == 2) {
+                if (Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0])) && Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[1]))) {
                     ArkamaTeleport.teleport(Bukkit.getPlayer(args[0]), Bukkit.getPlayer(args[1]).getLocation(), true);
                     p.sendMessage(prefix + " tu as téléporté " + Bukkit.getPlayer(args[0]).getName() + " à " + Bukkit.getPlayer(args[1]).getName());
                 } else {

@@ -70,7 +70,7 @@ public abstract class Baguette {
         ItemMeta meta = is.getItemMeta();
         meta.setDisplayName(name);
         meta.setLore(Arrays.asList(lore));
-        meta.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 1, true);
+        meta.addEnchant(Enchantment.LOOTING, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         is.setItemMeta(meta);
         return is;

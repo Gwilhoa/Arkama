@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 public class ArkaGamemode extends JavaPlugin implements TabCompleter {
     private final String prefix = "§cGamemode §1§l>>>§e";
+
     @Override
     public void onEnable() {
         getCommand("gamemode").setExecutor(this);
@@ -41,8 +42,7 @@ public class ArkaGamemode extends JavaPlugin implements TabCompleter {
         return null;
     }
 
-    private GameMode getGameModeById(Integer i)
-    {
+    private GameMode getGameModeById(Integer i) {
         if (i == 0)
             return (GameMode.SURVIVAL);
         if (i == 1)
@@ -53,11 +53,12 @@ public class ArkaGamemode extends JavaPlugin implements TabCompleter {
             return (GameMode.SPECTATOR);
         return (GameMode.CREATIVE);
     }
-    private void setGamemode(Player p, Integer i,CommandSender exec) {
+
+    private void setGamemode(Player p, Integer i, CommandSender exec) {
         if (0 <= i && i <= 3) {
             p.setGameMode(getGameModeById(i));
-            if (exec instanceof Player){
-                if (exec.equals(p)){
+            if (exec instanceof Player) {
+                if (exec.equals(p)) {
                     p.sendMessage(prefix + " tu es passé en " + getGameModeById(i).name());
                     getLogger().info(p.getName() + " est passé en " + getGameModeById(i).name());
                 } else {
@@ -76,20 +77,17 @@ public class ArkaGamemode extends JavaPlugin implements TabCompleter {
             }
         }
     }
-    private void setGamemode(Player p, String s,CommandSender exec){
-        if (s.equalsIgnoreCase("survival")){
-            setGamemode(p,0,exec);
-        }
-        else if (s.equalsIgnoreCase("creative")){
-            setGamemode(p,1,exec);
-        }
-        else if (s.equalsIgnoreCase("adventure") || s.equalsIgnoreCase("aventure")){
-            setGamemode(p,2,exec);
-        }
-        else if (s.equalsIgnoreCase("spectator") || s.equalsIgnoreCase("spectateur")){
-            setGamemode(p,3,exec);
-        }
-        else {
+
+    private void setGamemode(Player p, String s, CommandSender exec) {
+        if (s.equalsIgnoreCase("survival")) {
+            setGamemode(p, 0, exec);
+        } else if (s.equalsIgnoreCase("creative")) {
+            setGamemode(p, 1, exec);
+        } else if (s.equalsIgnoreCase("adventure") || s.equalsIgnoreCase("aventure")) {
+            setGamemode(p, 2, exec);
+        } else if (s.equalsIgnoreCase("spectator") || s.equalsIgnoreCase("spectateur")) {
+            setGamemode(p, 3, exec);
+        } else {
             if (exec instanceof Player) {
                 exec.sendMessage(prefix + "mauvais format /gamemode <joueur> <mode> ou /gm <mode>");
             } else {
@@ -99,16 +97,15 @@ public class ArkaGamemode extends JavaPlugin implements TabCompleter {
     }
 
 
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length == 2 ) {
+        if (args.length == 2) {
             Player cible = Bukkit.getPlayer(args[0]);
             if (Bukkit.getOnlinePlayers().contains(cible)) {
                 try {
-                    setGamemode(cible, Integer.parseInt(args[1]),sender);
+                    setGamemode(cible, Integer.parseInt(args[1]), sender);
                 } catch (NumberFormatException e) {
-                    setGamemode(cible, args[1],sender);
+                    setGamemode(cible, args[1], sender);
                 }
             }
             return false;
@@ -116,17 +113,16 @@ public class ArkaGamemode extends JavaPlugin implements TabCompleter {
         if (sender instanceof Player) {
             if (args.length == 1) {
                 try {
-                    setGamemode((Player) sender, Integer.parseInt(args[0]),sender);
+                    setGamemode((Player) sender, Integer.parseInt(args[0]), sender);
                 } catch (NumberFormatException e) {
-                    setGamemode((Player) sender, args[0],sender);
+                    setGamemode((Player) sender, args[0], sender);
                 }
             }
-            if (args.length == 0){
-                if (((Player)sender).getGameMode().equals(GameMode.CREATIVE)){
-                    setGamemode(((Player)sender),0,sender);
-                }
-                else{
-                    setGamemode(((Player)sender),1,sender);
+            if (args.length == 0) {
+                if (((Player) sender).getGameMode().equals(GameMode.CREATIVE)) {
+                    setGamemode(((Player) sender), 0, sender);
+                } else {
+                    setGamemode(((Player) sender), 1, sender);
                 }
             }
         } else {

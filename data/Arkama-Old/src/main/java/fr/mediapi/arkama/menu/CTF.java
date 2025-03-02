@@ -16,7 +16,7 @@ public class CTF {
         ItemMeta itM = it1.getItemMeta();
         if (customname != null) itM.setDisplayName(customname);
         itM.setLore(Arrays.asList(Lore));
-        itM.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 1, true);
+        itM.addEnchant(Enchantment.LOOTING, 1, true);
         itM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         it1.setItemMeta(itM);
         return it1;

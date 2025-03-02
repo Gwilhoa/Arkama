@@ -1,4 +1,4 @@
-FROM openjdk:20-bullseye
+FROM openjdk:21-bullseye
 
 RUN apt-get update -y && apt-get upgrade -y
 RUN apt-get install -y curl maven

@@ -1,7 +1,6 @@
 package fr.mediapi.arkama.util;
 
 import fr.guigui205.arkama.ArkamaCore;
-import fr.mediapi.arkama.Arkama;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
@@ -54,6 +53,6 @@ public class XpStart {
             }
         }, 0, 1);
         tid.put(p.getName(), task.getTaskId());
-        cid.put(p.getName(), Bukkit.getScheduler().runTaskLater(ArkamaCore.instance, task::cancel, secs * 20).getTaskId());
+        cid.put(p.getName(), Bukkit.getScheduler().runTaskLater(ArkamaCore.instance, task::cancel, secs * 20L).getTaskId());
     }
 }

@@ -86,8 +86,8 @@ public class CommandSimple implements CommandExecutor {
                         sb.append(args[i]);
                         sb.append(" ");
                     }
-                    kickm = "§cArkaKick §4§l>> §c" + args[0] + " as été kick pour raison : " + sb.toString();
-                    Bukkit.broadcastMessage("§cArkaKick §4§l>> §ctu as été kick pour raison : " + sb.toString());
+                    kickm = "§cArkaKick §4§l>> §c" + args[0] + " as été kick pour raison : " + sb;
+                    Bukkit.broadcastMessage("§cArkaKick §4§l>> §ctu as été kick pour raison : " + sb);
                 } else {
                     kickm = "§cArkaKick §4§l>> §ctu as été kick sans raison apparente";
                 }

@@ -4,10 +4,10 @@ version: "5.0.0"
 main: fr.guigui205.arkama.ArkaChat
 author: Guigui205 & DaveUltra & Timoreo (spelling by EnkiGaming)
 commands:
-  setprefix:
+  setpseudo:
     description: "change le prefix du chat"
     permission: "ArkaChat.setprefix"
 
-  setsuffix:
-    description: "change le suffix du chat"
-    permission: "ArkaChat.setsuffix"
+  setchat:
+    description: "change le chat format"
+    permission: "ArkaChat.setchat"

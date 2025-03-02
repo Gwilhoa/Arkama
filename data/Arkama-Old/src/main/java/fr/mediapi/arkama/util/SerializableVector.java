@@ -51,7 +51,7 @@ public class SerializableVector implements Serializable {
     }
 
     public SerializableVector setX(int x) {
-        this.x = (double) x;
+        this.x = x;
         return this;
     }
 
@@ -61,7 +61,7 @@ public class SerializableVector implements Serializable {
     }
 
     public SerializableVector setX(float x) {
-        this.x = (double) x;
+        this.x = x;
         return this;
     }
 
@@ -74,7 +74,7 @@ public class SerializableVector implements Serializable {
     }
 
     public SerializableVector setY(int y) {
-        this.y = (double) y;
+        this.y = y;
         return this;
     }
 
@@ -84,7 +84,7 @@ public class SerializableVector implements Serializable {
     }
 
     public SerializableVector setY(float y) {
-        this.y = (double) y;
+        this.y = y;
         return this;
     }
 
@@ -97,7 +97,7 @@ public class SerializableVector implements Serializable {
     }
 
     public SerializableVector setZ(int z) {
-        this.z = (double) z;
+        this.z = z;
         return this;
     }
 
@@ -107,7 +107,7 @@ public class SerializableVector implements Serializable {
     }
 
     public SerializableVector setZ(float z) {
-        this.z = (double) z;
+        this.z = z;
         return this;
     }
 

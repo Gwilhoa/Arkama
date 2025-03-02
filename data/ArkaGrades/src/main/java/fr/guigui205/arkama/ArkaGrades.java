@@ -11,7 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-
 import java.io.*;
 import java.util.*;
 
@@ -48,6 +47,7 @@ public class ArkaGrades extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new GradeEvent(), this);
         getLogger().warning("[ArkaGrade] chargé");
     }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player p = (Player) sender;
@@ -240,10 +240,11 @@ public class ArkaGrades extends JavaPlugin {
             }
         }
     }
+
     class GradeEvent implements Listener {
         @EventHandler
-        public void onJoin(PlayerJoinEvent e){
-            if (!grades.containsKey(e.getPlayer().getUniqueId())){
+        public void onJoin(PlayerJoinEvent e) {
+            if (!grades.containsKey(e.getPlayer().getUniqueId())) {
                 grades.put(e.getPlayer().getUniqueId(), Grade.Grades.JOUEUR);
                 Grade.saveGrade();
             }

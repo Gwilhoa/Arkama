@@ -1,7 +1,6 @@
 package fr.mediapi.arkama.murder;
 
 import fr.guigui205.arkama.ArkamaCore;
-import fr.mediapi.arkama.Arkama;
 import fr.mediapi.arkama.util.ItemBuilder;
 import fr.mediapi.arkama.util.SerializableVector;
 import fr.mediapi.arkama.util.XpStart;
@@ -20,15 +19,15 @@ import org.bukkit.scoreboard.Team;
 import java.util.*;
 
 public class Game {
-    public static final ItemStack GUN = new ItemBuilder(Material.BOW).addName("§b§kolo§bPistolet§kolo").addLore("§bTu es le détective", "§bTue le meurtrier !").addEnchant(Enchantment.ARROW_DAMAGE, 999).addEnchant(Enchantment.ARROW_INFINITE, 1).build();
-    public static final ItemStack COUTEAU = new ItemBuilder(Material.DIAMOND_SWORD).addName("§c§kolo§cCouteau§kolo").addLore("§cTu es le meurtrier", "§cTue tout le monde !").addEnchant(Enchantment.DAMAGE_ALL, 999).build();
+    public static final ItemStack GUN = new ItemBuilder(Material.BOW).addName("§b§kolo§bPistolet§kolo").addLore("§bTu es le détective", "§bTue le meurtrier !").addEnchant(Enchantment.POWER, 999).addEnchant(Enchantment.INFINITY, 1).build();
+    public static final ItemStack COUTEAU = new ItemBuilder(Material.DIAMOND_SWORD).addName("§c§kolo§cCouteau§kolo").addLore("§cTu es le meurtrier", "§cTue tout le monde !").addEnchant(Enchantment.EFFICIENCY, 999).build();
     public String name;
     public HashMap<Location, String> dead = new HashMap<>();
     public String arena;
     public String murder;
     public int task;
     public ArrayList<String> detect = new ArrayList<>();
-    private ArrayList<String> players = new ArrayList<>();
+    private final ArrayList<String> players = new ArrayList<>();
 
     public Game(String name, String arena) {
         this.name = name;

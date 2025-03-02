@@ -1,6 +1,6 @@
 name: Minecraft Server Deployment and Command Execution
 
-on: [push]
+on: [ push ]
 
 jobs:
   deploy:

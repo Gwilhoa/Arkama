@@ -6,7 +6,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import java.util.ArrayList;
 
 public class Handler {
-    private static ArrayList<Baguette> baguettes = new ArrayList<>();
+    private static final ArrayList<Baguette> baguettes = new ArrayList<>();
 
     public static void handle(PlayerInteractEvent e) {
         for (Baguette ba : baguettes) {

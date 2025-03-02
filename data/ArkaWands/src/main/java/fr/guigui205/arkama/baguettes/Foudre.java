@@ -24,7 +24,7 @@ public class Foudre extends Baguette {
         }
         delay(p);
         reload(p);
-        Block block = p.getTargetBlock((Set<Material>) null, 30);
+        Block block = p.getTargetBlock(null, 30);
         p.getWorld().strikeLightning(block.getLocation());
     }
 }

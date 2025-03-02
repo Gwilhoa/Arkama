@@ -6,7 +6,6 @@ import fr.mediapi.arkama.menu.main;
 import fr.mediapi.arkama.murder.Game;
 import fr.mediapi.arkama.murder.Murder;
 import fr.mediapi.arkama.objects.Grade;
-import io.papermc.paper.chat.ChatRenderer;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Skull;
@@ -37,7 +36,6 @@ import org.bukkit.util.Vector;
 import java.util.*;
 
 import static fr.mediapi.arkama.Arkama.grade;
-
 
 
 public class Evenement implements Listener {
@@ -77,7 +75,7 @@ public class Evenement implements Listener {
         ItemMeta custommenu = menu.getItemMeta();
         custommenu.setDisplayName("§6Menu");
         custommenu.setLore(Arrays.asList("§a§lOuvrir le menu", "§e§lArkama"));
-        custommenu.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 1, true);
+        custommenu.addEnchant(Enchantment.LOOTING, 1, true);
         custommenu.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         menu.setItemMeta(custommenu);
         return menu;
@@ -421,17 +419,17 @@ public class Evenement implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
-         if (e.getPlayer().getLocation().getWorld().getName().equals("jump")) {
-             Location l = e.getPlayer().getLocation();
-             Block b = new Location(l.getWorld(), l.getX(), l.getY() - 1, l.getZ()).getBlock();
-             if (b.getType() == Material.GREEN_GLAZED_TERRACOTTA) {
-                 e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 20, 6, true, false));
-             }
-             if (b.getType() == Material.LIGHT_BLUE_GLAZED_TERRACOTTA) {
-                 Vector v = e.getPlayer().getVelocity();
-                 e.getPlayer().setVelocity(new Vector(v.getX(), 2.5D, v.getZ()));
-                 //e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,1,10,true,false));
-             }
+        if (e.getPlayer().getLocation().getWorld().getName().equals("jump")) {
+            Location l = e.getPlayer().getLocation();
+            Block b = new Location(l.getWorld(), l.getX(), l.getY() - 1, l.getZ()).getBlock();
+            if (b.getType() == Material.GREEN_GLAZED_TERRACOTTA) {
+                e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 20, 6, true, false));
+            }
+            if (b.getType() == Material.LIGHT_BLUE_GLAZED_TERRACOTTA) {
+                Vector v = e.getPlayer().getVelocity();
+                e.getPlayer().setVelocity(new Vector(v.getX(), 2.5D, v.getZ()));
+                //e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,1,10,true,false));
+            }
         }
     }
 }

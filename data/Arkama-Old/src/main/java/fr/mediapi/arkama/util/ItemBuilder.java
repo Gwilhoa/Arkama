@@ -13,7 +13,7 @@ import java.util.List;
 public class ItemBuilder {
     private String name;
     private List<String> lore;
-    private Material m;
+    private final Material m;
     private HashMap<Enchantment, Integer> enchs;
     private ItemStack temp;
 

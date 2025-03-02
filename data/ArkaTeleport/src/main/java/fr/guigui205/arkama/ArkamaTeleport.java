@@ -14,20 +14,12 @@ import java.util.UUID;
 
 public class ArkamaTeleport extends JavaPlugin {
 
+    private static final HashMap<UUID, Location> oldpos = new HashMap<UUID, Location>();
     public static ArkamaTeleport instance;
+    public static HashMap<UUID, Integer> tp = new HashMap<UUID, Integer>();
 
     public ArkamaTeleport() {
         instance = this;
-    }
-
-    private static final HashMap<UUID, Location> oldpos = new HashMap<UUID, Location>();
-    public static HashMap<UUID, Integer> tp = new HashMap<UUID, Integer>();
-
-    @Override
-    public void onEnable() {
-
-        getServer().getPluginManager().registerEvents(new TeleportEvent(), this);
-        getLogger().warning("[ArkaTeleport] chargé");
     }
 
     public static boolean teleport(Player p, Location l, boolean f) {
@@ -56,15 +48,24 @@ public class ArkamaTeleport extends JavaPlugin {
         }
         return false;
     }
-    public static Location oldPos(Player p){
-            return oldpos.get(p.getUniqueId());
-        }
+
+    public static Location oldPos(Player p) {
+        return oldpos.get(p.getUniqueId());
+    }
+
+    @Override
+    public void onEnable() {
+
+        getServer().getPluginManager().registerEvents(new TeleportEvent(), this);
+        getLogger().warning("[ArkaTeleport] chargé");
+    }
 
 
 }
-class TeleportEvent implements Listener{
+
+class TeleportEvent implements Listener {
     @EventHandler
-    public void onMove(PlayerMoveEvent e){
+    public void onMove(PlayerMoveEvent e) {
         if (ArkamaTeleport.tp != null && ArkamaTeleport.tp.get(e.getPlayer().getUniqueId()) != null) {
             ArkamaTeleport.tp.put(e.getPlayer().getUniqueId(), -1);
         }

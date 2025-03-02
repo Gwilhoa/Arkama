@@ -23,6 +23,7 @@ import java.util.HashMap;
 public class ArkaWarp extends JavaPlugin {
     public static HashMap<String, SerializableLocation> warps = new HashMap<>();
     private final String prefix = "§bWarps §9§l>>>§e";
+
     @Override
     public void onEnable() {
         getCommand("setwarp").setExecutor(this);
@@ -166,6 +167,7 @@ public class ArkaWarp extends JavaPlugin {
 
 class WarpEvent implements Listener {
     private final String prefix = "§bWarps §9§l>>>§e";
+
     @EventHandler
     public void onClick(InventoryClickEvent e) {
         Inventory inv = e.getInventory();

@@ -1,0 +1,22 @@
+name: Arkama-Utils
+api-version: 1.16
+version: "5.0.0"
+main: fr.guigui205.arkama.ArkaUtils
+author: Guigui205 & DaveUltra & Timoreo (spelling by EnkiGaming)
+commands:
+  explode:
+    description: "Desactivation/ Activation des explosions"
+    permission: "ArkaUtils.explode"
+  invsee:
+    description: "regarder l'inventaire de quelqu'un"
+    permission: "ArkaUtils.invsee"
+  hat:
+    description: "mettre un nouveau chapeau"
+    permission: "ArkaUtils.hat"
+  rl:
+    description: "redemarre le serveur"
+    permission: "ArkaUtils.rl"
+  ban:
+    description: "ban du serveur"
+    permission: "ArkaUtils.ban"
+

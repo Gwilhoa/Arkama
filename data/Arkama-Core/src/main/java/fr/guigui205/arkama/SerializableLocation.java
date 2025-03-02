@@ -4,12 +4,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 public class SerializableLocation {
-    private String world;
-    private double x;
-    private double y;
-    private double z;
-    private float pitch;
-    private float yaw;
+    private final String world;
+    private final double x;
+    private final double y;
+    private final double z;
+    private final float pitch;
+    private final float yaw;
 
     public SerializableLocation(String world, double x, double y, double z, float pitch, float yaw) {
         this.world = world;

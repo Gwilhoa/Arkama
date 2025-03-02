@@ -22,7 +22,6 @@ public class RayTrace {
         this.direction = direction;
     }
 
-    @Nullable
     public static Entity getNearestEntityInSight(Player player, int range) {
         ArrayList<Entity> entities = (ArrayList<Entity>) player.getNearbyEntities(range, range, range);
         ArrayList<Block> sightBlock = (ArrayList<Block>) player.getLineOfSight(null, range);
@@ -43,7 +42,6 @@ public class RayTrace {
         return null; //Return null/nothing if no entity was found
     }
 
-    @Nullable
     public static Block getNearestBlockInSight(Player player) {
         return getNearestBlockInSight(player, 120);
     }
@@ -60,10 +58,7 @@ public class RayTrace {
             return false;
         } else if (position.getY() < min.getY() || position.getY() > max.getY()) {
             return false;
-        } else if (position.getZ() < min.getZ() || position.getZ() > max.getZ()) {
-            return false;
-        }
-        return true;
+        } else return !(position.getZ() < min.getZ()) && !(position.getZ() > max.getZ());
     }
 
     //get a point on the raytrace at X blocks away
@@ -74,11 +69,7 @@ public class RayTrace {
     //checks if a position is on contained within the position
     public boolean isOnLine(Vector position) {
         double t = (position.getX() - origin.getX()) / direction.getX();
-        ;
-        if (position.getBlockY() == origin.getY() + (t * direction.getY()) && position.getBlockZ() == origin.getZ() + (t * direction.getZ())) {
-            return true;
-        }
-        return false;
+        return position.getBlockY() == origin.getY() + (t * direction.getY()) && position.getBlockZ() == origin.getZ() + (t * direction.getZ());
     }
 
     //get all postions on a raytrace

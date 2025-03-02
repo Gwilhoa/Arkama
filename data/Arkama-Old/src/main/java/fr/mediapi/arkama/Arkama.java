@@ -35,7 +35,6 @@ public class Arkama extends JavaPlugin implements CommandExecutor {
     }
 
 
-
     public static void saveKit() {
         if (new File("Arkama/kit.json").exists()) {
             try {
@@ -78,7 +77,6 @@ public class Arkama extends JavaPlugin implements CommandExecutor {
 
 
         Murder.loadArenas();
-
 
 
         if (new File("Arkama/money.json").exists()) {

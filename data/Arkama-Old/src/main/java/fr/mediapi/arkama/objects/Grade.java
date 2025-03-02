@@ -10,7 +10,6 @@ import static fr.guigui205.arkama.ArkamaCore.gson;
 import static fr.mediapi.arkama.Arkama.grade;
 
 
-
 public class Grade {
 
     public String name;
@@ -57,8 +56,8 @@ public class Grade {
         BUILDER("builder", ChatColor.AQUA + "", "§8[§bBuildeur§8] "),
         ARKAMIEN("arkamien", ChatColor.LIGHT_PURPLE + "", "§8[§eArka§cm§dien§8] "),
         MODO("modo", ChatColor.GREEN + "", "§8[§aModérateur§8] "),
-        ADMIN("admin", "§c" + "" + ChatColor.BOLD, "§8§l[§c§ladministrateur§8§l] "),
-        RESPONSABLE("resp", "§9" + "" + ChatColor.BOLD, "§8§l[§9§lresponsable§8§l]"),
+        ADMIN("admin", "§c" + ChatColor.BOLD, "§8§l[§c§ladministrateur§8§l] "),
+        RESPONSABLE("resp", "§9" + ChatColor.BOLD, "§8§l[§9§lresponsable§8§l]"),
         FONDATEUR("fondateur", ChatColor.GOLD + "" + ChatColor.BOLD, "§8§l[§6§lFondateur§8§l] "),
         DEVELOPPEUR("Developpeur", ChatColor.DARK_RED + "" + ChatColor.BOLD, "§8§l[§5§lDeveloppeur§8§l] ");
 

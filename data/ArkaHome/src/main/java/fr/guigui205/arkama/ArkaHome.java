@@ -17,7 +17,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 public class ArkaHome extends JavaPlugin {
     private final String prefix = "§bHomes §9§l>>>§e";
@@ -73,10 +76,9 @@ public class ArkaHome extends JavaPlugin {
                         if (h.name.equalsIgnoreCase(s)) {
                             if (p.getGameMode().equals(GameMode.CREATIVE) || p.getGameMode().equals(GameMode.SPECTATOR)) {
                                 ArkamaTeleport.teleport(p, h.getpos(), true);
-                            }
-                            else{
-                                boolean f = ArkamaTeleport.teleport(p,h.getpos(),false);
-                                if (!f){
+                            } else {
+                                boolean f = ArkamaTeleport.teleport(p, h.getpos(), false);
+                                if (!f) {
                                     return false;
                                 }
                             }
@@ -97,7 +99,7 @@ public class ArkaHome extends JavaPlugin {
             } else {
                 ArrayList<Home> set = new ArrayList<>(Home.homes.get(((Player) sender).getUniqueId()));
                 set.removeIf(h -> h.name.equalsIgnoreCase(s));
-                if (Home.homes.get(((Player) sender).getUniqueId()).size() > 12 && !s.equals( "home")) {
+                if (Home.homes.get(((Player) sender).getUniqueId()).size() > 12 && !s.equals("home")) {
                     sender.sendMessage(prefix + " vous possedez trop de home");
                     return false;
                 }
@@ -106,43 +108,43 @@ public class ArkaHome extends JavaPlugin {
             }
             sender.sendMessage(prefix + " home posé avec succès");
         } else {
-            if (Home.homes.containsKey(((Player) sender).getUniqueId())){
+            if (Home.homes.containsKey(((Player) sender).getUniqueId())) {
                 Inventory inv = Bukkit.createInventory(null, 27, command.getName());
-            for (int i = 0; i <= 26; i++) {
-                ItemStack it1 = new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
-                ItemMeta itM = it1.getItemMeta();
-                it1.setItemMeta(itM);
-                inv.setItem(i, it1);
-            }
-            List<Home> hList = Home.homes.get(((Player) sender).getUniqueId());
-            ArrayList<Integer> l = new ArrayList<Integer>();
-            l.add(1);
-            l.add(2);
-            l.add(10);
-            l.add(11);
-            l.add(19);
-            l.add(20);
-            l.add(6);
-            l.add(7);
-            l.add(15);
-            l.add(16);
-            l.add(24);
-            l.add(25);
-            int i = l.size() - 1;
-            for (Home h : hList) {
-                if (h.name.equals("home")) {
-                    inv.setItem(13, ArkamaCore.getItem(Material.LIME_STAINED_GLASS_PANE, h.name, "§eArkaHome"));
-                } else {
-                    inv.setItem(l.get(i), ArkamaCore.getItem(Material.LIME_STAINED_GLASS_PANE, h.name, "§eArkaHome"));
+                for (int i = 0; i <= 26; i++) {
+                    ItemStack it1 = new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
+                    ItemMeta itM = it1.getItemMeta();
+                    it1.setItemMeta(itM);
+                    inv.setItem(i, it1);
+                }
+                List<Home> hList = Home.homes.get(((Player) sender).getUniqueId());
+                ArrayList<Integer> l = new ArrayList<Integer>();
+                l.add(1);
+                l.add(2);
+                l.add(10);
+                l.add(11);
+                l.add(19);
+                l.add(20);
+                l.add(6);
+                l.add(7);
+                l.add(15);
+                l.add(16);
+                l.add(24);
+                l.add(25);
+                int i = l.size() - 1;
+                for (Home h : hList) {
+                    if (h.name.equals("home")) {
+                        inv.setItem(13, ArkamaCore.getItem(Material.LIME_STAINED_GLASS_PANE, h.name, "§eArkaHome"));
+                    } else {
+                        inv.setItem(l.get(i), ArkamaCore.getItem(Material.LIME_STAINED_GLASS_PANE, h.name, "§eArkaHome"));
+                        i -= 1;
+                    }
+                }
+                while (i != -1) {
+                    inv.setItem(l.get(i), ArkamaCore.getItem(Material.RED_STAINED_GLASS_PANE, "Home non posé", "§eArkaHome"));
                     i -= 1;
                 }
-            }
-            while (i != -1) {
-                inv.setItem(l.get(i), ArkamaCore.getItem(Material.RED_STAINED_GLASS_PANE, "Home non posé", "§eArkaHome"));
-                i -= 1;
-            }
-            ((Player) sender).openInventory(inv);
-        } else {
+                ((Player) sender).openInventory(inv);
+            } else {
                 sender.sendMessage(prefix + " tu as aucun home enregistré");
             }
         }
@@ -175,6 +177,7 @@ public class ArkaHome extends JavaPlugin {
 
 class HomeEvent implements Listener {
     private final String prefix = "§bHomes §9§l>>>§e";
+
     @EventHandler
     public void onClick(InventoryClickEvent e) {
         Inventory inv = e.getInventory();
@@ -218,12 +221,12 @@ class HomeEvent implements Listener {
 }
 
 class Home {
+    public static HashMap<UUID, List<Home>> homes = new HashMap<>();
     public String name;
     public String world;
     public Double x;
     public Double y;
     public Double z;
-    public static HashMap<UUID, List<Home>> homes = new HashMap<>();
 
     public Home(String name, Location pos) {
         this.name = name;
@@ -232,12 +235,13 @@ class Home {
         this.y = pos.getY();
         this.z = pos.getZ();
     }
-    public Location getpos(){
-        return new Location(Bukkit.getWorld(this.world),this.x,this.y,this.z);
+
+    public Location getpos() {
+        return new Location(Bukkit.getWorld(this.world), this.x, this.y, this.z);
 
     }
-    public void save()
-    {
+
+    public void save() {
         if (new File("Arkama/home.json").exists()) {
             try {
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Arkama/home.json")));
@@ -262,6 +266,7 @@ class Home {
             }
         }
     }
+
     @Override
     public String toString() {
         return "Home{" +

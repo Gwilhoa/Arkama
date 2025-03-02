@@ -1,7 +1,6 @@
 package fr.mediapi.arkama.murder.commandes;
 
 import fr.guigui205.arkama.ArkamaCore;
-import fr.mediapi.arkama.Arkama;
 import fr.mediapi.arkama.murder.Arena;
 import fr.mediapi.arkama.murder.Game;
 import fr.mediapi.arkama.murder.Murder;

@@ -1,11 +1,9 @@
 package fr.guigui205.arkama;
 
-import com.google.gson.reflect.TypeToken;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.enchantments.Enchantment;
@@ -15,11 +13,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.*;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 
 public class ArkaEnchant extends JavaPlugin implements TabCompleter {
@@ -42,8 +37,7 @@ public class ArkaEnchant extends JavaPlugin implements TabCompleter {
 
     public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
         Player p = (Player) sender;
-        if (cmd.getName().equalsIgnoreCase("rename"))
-        {
+        if (cmd.getName().equalsIgnoreCase("rename")) {
             ItemStack iS = p.getInventory().getItemInMainHand();
             ItemMeta iM = iS.getItemMeta();
             StringBuilder sb = new StringBuilder();

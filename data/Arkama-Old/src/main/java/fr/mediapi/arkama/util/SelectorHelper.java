@@ -623,8 +623,8 @@ public class SelectorHelper {
     private static boolean isName(String arg, Entity e) {
         if (getName(arg) == null)
             return true;
-        return (isInverted(arg) != (e.getCustomName() != null) && isInverted(arg) != (getName(
-                arg).equals(e.getCustomName().replace(" ", "_")) || (e instanceof Player && ((Player) e)
+        return (isInverted(arg) == (e.getCustomName() == null) && isInverted(arg) != (getName(
+                arg).equals(e.getCustomName().replace(" ", "_")) || (e instanceof Player && e
                 .getName().replace(" ", "_").equalsIgnoreCase(getName(arg)))));
     }
 

@@ -2,7 +2,6 @@ package fr.mediapi.arkama.murder;
 
 import fr.guigui205.arkama.ArkamaCore;
 import fr.mediapi.arkama.SubPlugin;
-import fr.mediapi.arkama.menu.main;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -38,7 +37,7 @@ public class Murder implements SubPlugin {
         ItemMeta itM = it1.getItemMeta();
         if (customname != null) itM.setDisplayName(customname);
         itM.setLore(Arrays.asList(Lore));
-        itM.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 1, true);
+        itM.addEnchant(Enchantment.LOOTING, 1, true);
         itM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         it1.setItemMeta(itM);
         return it1;

@@ -8,8 +8,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
-
 import static fr.guigui205.arkama.ArkamaCore.getItem;
 
 public class main {
@@ -20,7 +18,7 @@ public class main {
         for (int i = 0; i <= 53; i++) {
             ItemStack it1 = new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1);
             ItemMeta itM = it1.getItemMeta();
-            itM.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 1, true);
+            itM.addEnchant(Enchantment.LOOTING, 1, true);
             itM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             it1.setItemMeta(itM);
             inv.setItem(i, it1);

@@ -6,21 +6,35 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Hello world!
  */
 public class ArkamaCore extends JavaPlugin {
+    public static Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    public static ArkamaCore instance;
+
+    @Override
+    public void onEnable() {
+
+
+        instance = this;
+        getLogger().warning("[ArkaCore] chargé");
+    }
+
     public static <K, V> List<K> getKeysFromValue(Map<K, V> hm, V value) {
         List<K> list = new ArrayList<>();
         for (K o : hm.keySet()) {
@@ -31,30 +45,18 @@ public class ArkamaCore extends JavaPlugin {
         return list;
     }
 
-    public static Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    public static ArkamaCore instance;
-
-    @Override
-    public void onEnable() {
-        new File("Arkama").mkdir();
-        instance = this;
-        getServer().getPluginManager().registerEvents(new GeneralEvent(), this);
-        getLogger().warning("[ArkaCore] chargement des add-ons");
-    }
-
     public static ItemStack getItem(Material material, String customname, String... Lore) {
         ItemStack it1 = new ItemStack(material, 1);
         ItemMeta itM = it1.getItemMeta();
         if (customname != null) itM.setDisplayName(customname);
         itM.setLore(Arrays.asList(Lore));
-        itM.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 1, true);
+        itM.addEnchant(Enchantment.LOOTING, 1, true);
         itM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         it1.setItemMeta(itM);
         return it1;
     }
 
-    public static void Broadcast(String msg)
-    {
+    public static void Broadcast(String msg) {
         Collection<? extends Player> p = Bukkit.getOnlinePlayers();
         for (Player player : p)
         {
@@ -62,14 +64,52 @@ public class ArkamaCore extends JavaPlugin {
         }
     }
 
+    public static String cleanString(String input) {
+        if (input == null) {
+            return null;
+        }
+
+        String processed = input.replaceAll("§.", "");
+
+        processed = processed.replaceAll("\\s+", " ").trim();
+
+        return processed;
+    }
+
+    public static void sendMessageToDiscord(String message, final String channel1) {
+        final String msg = cleanString(message);
+        final String channel = channel1 == null ? "1342417055386960004" : channel1;
+        System.out.println("sendMessageToDiscord appelée avec : " + msg);
+
+
+        CompletableFuture.runAsync(() -> {
+        String apiUrl = "https://api.bitume2000.fr/api/discord/send_message";
+
+
+        try {
+            URL url = new URL(apiUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setDoOutput(true);
+            String jsonPayload = "{ \"content\": \""+ msg +"\", \"channel_id\": \""+ channel +"\" }";
+
+
+            try (OutputStream os = conn.getOutputStream()) {
+                byte[] input = jsonPayload.getBytes(StandardCharsets.UTF_8);
+                os.write(input, 0, input.length);
+            }
+
+            int responseCode = conn.getResponseCode();
+            System.out.println("Response Code: " + responseCode);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    });
+    }
 }
 
 class GeneralEvent implements Listener {
-    @EventHandler
-    public void onExplode(EntityExplodeEvent e) {
-        if (e.getEntity().getWorld().getName().equals("Ville1")) {
-            e.setCancelled(true);
-        }
-    }
+
 
 }
