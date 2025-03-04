@@ -6,5 +6,6 @@ services:
     image: server-minecraft:dev
     ports:
       - 25565:25565
+      - 5001:5001
     container_name: arkama-papermc-dev
 

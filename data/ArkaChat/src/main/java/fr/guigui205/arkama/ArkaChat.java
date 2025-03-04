@@ -111,27 +111,22 @@ class ChatEvent implements Listener, ChatRenderer {
 
         MessageState state = ArkaChat.chats.get(source.getUniqueId());
 
-        // Vérification si le message est nouveau ou a changé
         if (!state.sent && !state.message.equals(content)) {
             sendMessageToDiscord(content, null);
             ArkaChat.chats.put(source.getUniqueId(), new MessageState(true, content));
 
-            // Réinitialiser après 1 seconde
             CompletableFuture.runAsync(() -> {
                 try {
-                    Thread.sleep(1000);  // Attendre 1 seconde
+                    Thread.sleep(1000);
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
 
-                // Réinitialiser le flag après le délai
                 ArkaChat.chats.put(source.getUniqueId(), new MessageState(false, ""));
             });
         } else if (state.message.equals(content)) {
-            // Message déjà envoyé récemment et identique, afficher un message mais ne pas envoyer
             System.out.println("Message déjà envoyé récemment et identique.");
         } else {
-            // Message différent, rien à faire
             System.out.println("Message envoyé avec succès.");
         }
 
@@ -139,7 +134,6 @@ class ChatEvent implements Listener, ChatRenderer {
     }
 }
 
-// Classe pour garder l'état du message et son envoi
 class MessageState {
     boolean sent;
     String message;
