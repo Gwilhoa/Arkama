@@ -25,31 +25,14 @@ import java.util.concurrent.CompletableFuture;
 public class ArkamaCore extends JavaPlugin {
     public static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     public static ArkamaCore instance;
-    private HttpServer server;
 
     @Override
     public void onEnable() {
         instance = this;
         getLogger().warning("[ArkaCore] chargé");
-
-        // Démarrer le serveur HTTP
-        this.server = new HttpServer(5001);
-        try {
-            server.start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
-            getLogger().info("Serveur HTTP démarré sur le port 5001");
-        } catch (Exception e) {
-            getLogger().severe("Impossible de démarrer le serveur HTTP");
-            e.printStackTrace();
-        }
     }
 
-    @Override
-    public void onDisable() {
-        if (server != null) {
-            server.stop();
-            getLogger().info("Serveur HTTP arrêté");
-        }
-    }
+
 
     public static void Broadcast(String msg) {
         Collection<? extends Player> p = Bukkit.getOnlinePlayers();
@@ -79,48 +62,7 @@ public class ArkamaCore extends JavaPlugin {
         return it1;
     }
 
-    private static class HttpServer extends NanoHTTPD {
-        public HttpServer(int port) {
-            super(port);
-        }
 
-        @Override
-        public Response serve(IHTTPSession session) {
-            try {
-                if (Method.POST.equals(session.getMethod()) && "/chat".equals(session.getUri())) {
-                    Map<String, String> body = new HashMap<>();
-                    session.parseBody(body);
-
-                    String requestBody = body.get("postData");
-                    JsonObject json = gson.fromJson(requestBody, JsonObject.class);
-
-                    String message = json.has("message") ? json.get("message").getAsString() : "Aucun message";
-                    String author = json.has("author") ? json.get("author").getAsString() : "Anonyme";
-
-                    ArkamaCore.Broadcast("§9" + author + " \uD83D\uDCAC " + message);
-
-                    return newFixedLengthResponse("Message reçu : " + message);
-                }
-
-                if (Method.GET.equals(session.getMethod()) && "/players".equals(session.getUri())) {
-                    Collection<? extends Player> players = Bukkit.getOnlinePlayers();
-
-                    JsonObject jsonResponse = new JsonObject();
-                    jsonResponse.addProperty("players", players.size());
-
-                    return newFixedLengthResponse(Response.Status.OK, "application/json", jsonResponse.toString());
-                }
-
-                return newFixedLengthResponse(Response.Status.NOT_FOUND, "text/plain", "Route non trouvée");
-            } catch (JsonSyntaxException e) {
-                return newFixedLengthResponse(Response.Status.BAD_REQUEST, "text/plain", "Format JSON invalide");
-            } catch (Exception e) {
-                e.printStackTrace();
-                return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, "text/plain", "Erreur interne");
-            }
-        }
-
-    }
 
     public static void sendMessageToDiscord(String message, final String channel1) {
         final String msg = cleanString(message);

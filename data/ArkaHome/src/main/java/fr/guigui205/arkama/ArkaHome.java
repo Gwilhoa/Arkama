@@ -27,11 +27,7 @@ public class ArkaHome extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        getCommand("sethome").setExecutor(this);
-        getCommand("home").setExecutor(this);
-        getCommand("homelist").setExecutor(this);
-        getCommand("delhome").setExecutor(this);
-        getServer().getPluginManager().registerEvents(new HomeEvent(), this);
+
 
 
         if (new File("Arkama/home.json").exists()) {
